@@ -3,24 +3,19 @@ import telebot
 import yt_dlp
 from flask import Flask
 from threading import Thread
-
 TOKEN = os.getenv("BOT_TOKEN")
 bot = telebot.TeleBot(TOKEN)
-
 # Petit serveur web pour Render
 app = Flask(__name__)
 @app.route('/')
 def home():
     return "Bot Junior est en ligne !"
-
 def run_flask():
     port = int(os.environ.get("PORT", 10000))
     app.run(host='0.0.0.0', port=port)
-
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.reply_to(message, "Salut boss ! Envoie-moi un lien TikTok et je te le télécharge.")
-
 @bot.message_handler(func=lambda m: True)
 def download_video(message):
     url = message.text
@@ -37,7 +32,6 @@ def download_video(message):
         os.remove(filename)
     except Exception as e:
         bot.reply_to(message, f"Erreur boss: {e}")
-
 if __name__ == "__main__":
     Thread(target=run_flask).start()
     print("Bot téléchargeur lancé !")
