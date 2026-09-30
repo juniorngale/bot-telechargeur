@@ -3,27 +3,20 @@ import telebot
 import yt_dlp
 from flask import Flask
 import threading
-
 TOKEN = os.getenv("BOT_TOKEN")
 bot = telebot.TeleBot(TOKEN)
-
 # TUE LE 409
 bot.delete_webhook(drop_pending_updates=True)
-
 app = Flask(__name__)
 @app.route('/')
 def home():
     return "Bot is live"
-
 def run_flask():
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 10000)))
-
 threading.Thread(target=run_flask).start()
-
 @bot.message_handler(commands=['start'])
 def start(msg):
     bot.reply_to(msg, "Yo boss! Envoie-moi un lien TikTok")
-
 @bot.message_handler(func=lambda m: True)
 def download(msg):
     url = msg.text.strip()
@@ -47,5 +40,4 @@ def download(msg):
         os.remove(filename)
     except Exception as e:
         bot.reply_to(msg, f"Erreur boss: {e}")
-
 bot.infinity_polling(skip_pending=True, timeout=20, long_polling_timeout=20)
