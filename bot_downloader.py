@@ -61,7 +61,7 @@ def download(msg):
         # Envoie AUSSI au canal automatiquement
         try:
             with open(filename, 'rb') as video2:
-                bot.send_video(CHANNEL_USERNAME, video2, caption=f"Nouvelle vidéo 🔥\nTélécharge aussi avec notre bot")
+                bot.send_video(CHANNEL_USERNAME, video2, caption=f"Nouvelle vidéo 🔥\nTélécharge aussi avec 👉 @Begedol_bot")
         except Exception as e:
             print(f"Erreur canal: {e}")
         os.remove(filename)       
